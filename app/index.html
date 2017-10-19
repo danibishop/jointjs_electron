@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Insert this line above script imports  -->
+    <script>if (typeof module === 'object') { window.module = module; module = undefined; }</script>
+
+    <script type="text/javascript" src="../node_modules/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="../node_modules/lodash/index.js"></script>
+    <script type="text/javascript" src="../node_modules/backbone/backbone.js"></script>
+    <script type="text/javascript" src="../node_modules/dagre/dist/dagre.min.js"></script>
+    <script type="text/javascript" src="../node_modules/graphlib/dist/graphlib.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../node_modules/jointjs/dist/joint.min.css" />
+    <script type="text/javascript" src="../node_modules/jointjs/dist/joint.min.js"></script>
+
+    <!-- Insert this line after script imports -->
+    <script>if (window.module) module = window.module;</script>
+</head>
+
+<body>
+    <h1>Diagram</h1>
+    <div id="myholder"></div>
+    <button id="import">Import</button>
+    <button id="export">Export</button>
+</body>
+
+<script type="text/javascript" src="index.js"></script>
+
+</html>
