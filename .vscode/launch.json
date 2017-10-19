@@ -12,7 +12,10 @@
             },
             "args": [
                 "."
-            ]
+            ],
+            "env": {
+                "debug_electron": "true"
+            }
         }
     ]
 }
