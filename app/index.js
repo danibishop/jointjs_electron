@@ -1,6 +1,3 @@
-const { dialog } = require('electron').remote
-const fs = require('fs');
-
 var graph = new joint.dia.Graph;
 
 var paper = new joint.dia.Paper({
@@ -54,28 +51,45 @@ var link2 = new joint.dia.Link({
 graph.addCells([rect, rect2, link1, link2]);
 autoLayout();
 
-document.querySelector("#import").addEventListener("click", importGraph);
-document.querySelector("#export").addEventListener("click", exportGraph);
+function runningInElectron() {
+    var userAgent = navigator.userAgent.toLowerCase();
+    return userAgent.indexOf(' electron/') > -1;
+}
+
+if (runningInElectron()) {
+    // Electron-specific code
+    const { dialog } = require('electron').remote
+    const fs = require('fs');
+
+    function importGraph() {
+        var targetFile = dialog.showOpenDialog({ properties: ['openFile'] });
+        if (targetFile) {
+            var json = fs.readFileSync(targetFile[0]);
+            graph.fromJSON(JSON.parse(json));
+        }
+    }
+
+    function exportGraph() {
+
+        var targetFile = dialog.showSaveDialog();
+        if (targetFile) {
+            var json = JSON.stringify(graph);
+            fs.writeFileSync(targetFile, json);
+        }
+
+    }
+
+    document.querySelector("#import").addEventListener("click", importGraph);
+    document.querySelector("#export").addEventListener("click", exportGraph);
+} else {
+    document.querySelector("#import").setAttribute("disabled", true);
+    document.querySelector("#export").setAttribute("disabled", true);
+}
+
 document.querySelector("#auto-layout").addEventListener("click", autoLayout);
 resizePaper();
 
-function importGraph() {
-    var targetFile = dialog.showOpenDialog({ properties: ['openFile'] });
-    if (targetFile) {
-        var json = fs.readFileSync(targetFile[0]);
-        graph.fromJSON(JSON.parse(json));
-    }
-}
 
-function exportGraph() {
-
-    var targetFile = dialog.showSaveDialog();
-    if (targetFile) {
-        var json = JSON.stringify(graph);
-        fs.writeFileSync(targetFile, json);
-    }
-
-}
 
 function autoLayout() {
     joint.layout.DirectedGraph.layout(graph, {
@@ -93,8 +107,8 @@ function resizePaper(event) {
     $('#myholder').height($("#container").height());
     paper.setDimensions($('#myholder').width(), $('#myholder').height());
 
-    //paper.scaleContentToFit({ minScaleX: 0.3, minScaleY: 0.3, maxScaleX: 1, maxScaleY: 1 });
-
 };
 
 window.onresize = resizePaper;
+
+$(document).foundation();
