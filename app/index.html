@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Insert this line above script imports  -->
     <script>if (typeof module === 'object') { window.module = module; module = undefined; }</script>
 
@@ -13,18 +14,28 @@
     <link rel="stylesheet" type="text/css" href="../node_modules/jointjs/dist/joint.min.css" />
     <script type="text/javascript" src="../node_modules/jointjs/dist/joint.min.js"></script>
 
+    <link rel="stylesheet" href="../node_modules/foundation-sites/dist/css/foundation.css" />
+    <script type="text/javascript" src="../node_modules/foundation-sites/dist/js/foundation.min.js"></script>
     <!-- Insert this line after script imports -->
     <script>if (window.module) module = window.module;</script>
 </head>
 
 <body>
     <h1>Diagram</h1>
-    <div id="myholder"></div>
+    <div class="grid-container full">
+        <div class="grid-x grid-margin-x" id="container">
+            <div class="cell small-12" id="myholder"></div>
+        </div>
+    </div>
+
     <button id="import">Import</button>
     <button id="export">Export</button>
     <button id="auto-layout">Auto Layout</button>
 </body>
 
-<script>require('./index.js')</script>
+<script>
+            $(document).foundation();
+            require('./index.js');
+</script>
 
 </html>

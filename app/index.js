@@ -4,6 +4,7 @@ const fs = require('fs');
 var graph = new joint.dia.Graph;
 
 var paper = new joint.dia.Paper({
+
     el: $('#myholder'),
     width: 600,
     height: 600,
@@ -56,6 +57,7 @@ autoLayout();
 document.querySelector("#import").addEventListener("click", importGraph);
 document.querySelector("#export").addEventListener("click", exportGraph);
 document.querySelector("#auto-layout").addEventListener("click", autoLayout);
+resizePaper();
 
 function importGraph() {
     var targetFile = dialog.showOpenDialog({ properties: ['openFile'] });
@@ -84,3 +86,15 @@ function autoLayout() {
         marginY: 80
     })
 }
+
+function resizePaper(event) {
+    $("#container").height(document.documentElement.clientHeight - 100);
+    $('#myholder').width($("#container").width());
+    $('#myholder').height($("#container").height());
+    paper.setDimensions($('#myholder').width(), $('#myholder').height());
+
+    //paper.scaleContentToFit({ minScaleX: 0.3, minScaleY: 0.3, maxScaleX: 1, maxScaleY: 1 });
+
+};
+
+window.onresize = resizePaper;
