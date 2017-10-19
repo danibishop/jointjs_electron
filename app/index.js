@@ -1,3 +1,6 @@
+const { dialog } = require('electron').remote
+const fs = require('fs');
+
 var graph = new joint.dia.Graph;
 
 var paper = new joint.dia.Paper({
@@ -26,7 +29,6 @@ var rect = new joint.shapes.devs.Model({
 });
 
 var rect2 = rect.clone();
-//rect2.translate(300);
 
 var link1 = new joint.dia.Link({
     source: { id: rect.id, port: "A" },
@@ -57,3 +59,24 @@ var bbox = joint.layout.DirectedGraph.layout(graph, {
     marginX: 80,
     marginY: 80
 })
+
+document.querySelector("#import").addEventListener("click", import_graph);
+document.querySelector("#export").addEventListener("click", export_graph);
+
+function import_graph() {
+    var targetFile = dialog.showOpenDialog({ properties: ['openFile'] });
+    if (targetFile) {
+        var json = fs.readFileSync(targetFile[0]);
+        graph.fromJSON(JSON.parse(json));
+    }
+}
+
+function export_graph() {
+
+    var targetFile = dialog.showSaveDialog();
+    if (targetFile) {
+        var json = JSON.stringify(graph);
+        fs.writeFileSync(targetFile, json);
+    }
+
+}
