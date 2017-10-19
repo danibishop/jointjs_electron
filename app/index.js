@@ -51,19 +51,13 @@ var link2 = new joint.dia.Link({
 });
 
 graph.addCells([rect, rect2, link1, link2]);
+autoLayout();
 
-var bbox = joint.layout.DirectedGraph.layout(graph, {
-    nodeSep: 50,
-    edgeSep: 80,
-    rankDir: "LR",
-    marginX: 80,
-    marginY: 80
-})
+document.querySelector("#import").addEventListener("click", importGraph);
+document.querySelector("#export").addEventListener("click", exportGraph);
+document.querySelector("#auto-layout").addEventListener("click", autoLayout);
 
-document.querySelector("#import").addEventListener("click", import_graph);
-document.querySelector("#export").addEventListener("click", export_graph);
-
-function import_graph() {
+function importGraph() {
     var targetFile = dialog.showOpenDialog({ properties: ['openFile'] });
     if (targetFile) {
         var json = fs.readFileSync(targetFile[0]);
@@ -71,7 +65,7 @@ function import_graph() {
     }
 }
 
-function export_graph() {
+function exportGraph() {
 
     var targetFile = dialog.showSaveDialog();
     if (targetFile) {
@@ -79,4 +73,14 @@ function export_graph() {
         fs.writeFileSync(targetFile, json);
     }
 
+}
+
+function autoLayout() {
+    joint.layout.DirectedGraph.layout(graph, {
+        nodeSep: 50,
+        edgeSep: 80,
+        rankDir: "LR",
+        marginX: 80,
+        marginY: 80
+    })
 }
