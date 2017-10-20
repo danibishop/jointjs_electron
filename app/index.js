@@ -16,14 +16,24 @@ var paper = new joint.dia.Paper({
 
     },
     validateConnection: validateConnection,
-    linkPinning: false
+    markAvailable: true,
+    linkPinning: false,
 });
 
 function validateConnection(cellViewS, magnetS, cellViewT, magnetT, end, linkView) {
     // Prevent linking from output ports to input ports within one element.
     if (cellViewS === cellViewT) return false;
-    // Prevent linking outputs
-    if (magnetS.getAttribute('port-group') === 'out' && magnetT.getAttribute('port-group') === 'out') return false;
+
+    // Prevent linking in2in or out2out
+    if (magnetS && magnetT && magnetS.getAttribute('port-group') === magnetT.getAttribute('port-group')) return false;
+
+    // Prevent multiple links for the same connection
+    if (graph.getLinks().find((x) => {
+        return (x.attributes.source.id == cellViewS.model.id &&
+            x.attributes.target.id == cellViewT.model.id &&
+            x.attributes.source.port == magnetS.attributes.port.value &&
+            x.attributes.target.port == magnetT.attributes.port.value)
+    })) return false;
     return true;
 }
 

@@ -1,0 +1,9 @@
+/* port styling */
+.available-magnet {
+    fill: rgb(183, 0, 255);
+}
+
+/* element styling */
+.available-cell rect {
+    stroke-dasharray: 5, 2;
+}
