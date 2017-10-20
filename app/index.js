@@ -76,10 +76,6 @@ var link2 = new joint.dia.Link({
 graph.addCells([rect, rect2, link1, link2]);
 autoLayout();
 
-function runningInElectron() {
-    var userAgent = navigator.userAgent.toLowerCase();
-    return userAgent.indexOf(' electron/') > -1;
-}
 
 if (runningInElectron()) {
     // Electron-specific code
@@ -114,67 +110,6 @@ if (runningInElectron()) {
 
 document.querySelector("#auto-layout").addEventListener("click", autoLayout);
 resizePaper();
-
-
-
-function autoLayout() {
-    joint.layout.DirectedGraph.layout(graph, {
-        nodeSep: 50,
-        edgeSep: 80,
-        rankDir: "LR",
-        marginX: 80,
-        marginY: 80
-    })
-}
-
-function resizePaper(event) {
-    $("#container").height(document.documentElement.clientHeight - 100);
-    $('#myholder').width($("#container").width());
-    $('#myholder').height($("#container").height());
-    paper.setDimensions($('#myholder').width(), $('#myholder').height());
-
-};
-
 window.onresize = resizePaper;
-
-Foundation.ContextMenu.prototype.addConfig('cellmenu', {
-    accessible: true,
-    single: true,
-    structure: [{
-        text: 'Move to',
-        help: 'Alt + M',
-        key: 'ALT_M',
-        click: function ($item) {
-            var cell = graph.getCell($item.attr('model-id'));
-            console.log(cell);
-        }
-    }, {
-        icon: 'fa fa-paper-plane',
-        text: 'Send via mail',
-        click: function ($item) {
-            alert('Sending a mail!');
-        }
-    }, {
-        cssClass: 'divider'
-    }, {
-        text: 'More...',
-        children: [{
-            text: 'Delete'
-        }, {
-            text: 'Download...',
-            children: [{
-                text: 'Save as PDF'
-            }, {
-                text: 'Save as PNG'
-            }]
-        }]
-    }]
-});
-
 addContextMenus();
-function addContextMenus() {
-    $(".joint-cell").attr("data-context-menu", "cellmenu");
-    $(".joint-cell").foundation();
-}
-
 $(document).foundation();
