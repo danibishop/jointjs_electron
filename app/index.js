@@ -138,7 +138,6 @@ if (runningInElectron()) {
         if (targetFile) {
             var json = fs.readFileSync(targetFile[0]);
             graph.fromJSON(JSON.parse(json));
-            addContextMenus();
         }
     }
 
