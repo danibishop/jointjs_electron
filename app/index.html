@@ -7,6 +7,15 @@
     <script>if (typeof module === 'object') { window.module = module; module = undefined; }</script>
 
     <script type="text/javascript" src="../node_modules/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="../node_modules/foundation-sites/dist/js/foundation.min.js"></script>
+    <script type="text/javascript" src="../node_modules/foundation-sites/dist/js/plugins/foundation.core.js"></script>
+
+    <script type="text/javascript" src="../node_modules/foundation-sites/dist/js/plugins/foundation.util.keyboard.js"></script>
+    <script type="text/javascript" src="../node_modules/foundation-sites/dist/js/plugins/foundation.util.triggers.js"></script>
+    <script type="text/javascript" src="../node_modules/foundation-sites/dist/js/plugins/foundation.util.mediaQuery.js"></script>
+    <script type="text/javascript" src="../node_modules/foundation-sites/dist/js/plugins/foundation.util.motion.js"></script>
+    <script type="text/javascript" src="../node_modules/foundation-sites/dist/js/plugins/foundation.reveal.js"></script>
+
     <script type="text/javascript" src="../node_modules/lodash/index.js"></script>
     <script type="text/javascript" src="../node_modules/backbone/backbone.js"></script>
     <script type="text/javascript" src="../node_modules/dagre/dist/dagre.min.js"></script>
@@ -14,20 +23,27 @@
     <link rel="stylesheet" type="text/css" href="../node_modules/jointjs/dist/joint.min.css" />
     <script type="text/javascript" src="../node_modules/jointjs/dist/joint.min.js"></script>
 
-
-    <link rel="stylesheet" href="../node_modules/foundation-sites/dist/css/foundation.css" />
-    <script type="text/javascript" src="../node_modules/foundation-sites/dist/js/foundation.min.js"></script>
-    <script src="../node_modules/foundation-contextmenu/dist/foundation.contextMenu.js" type="text/javascript"></script>
-    <link rel="stylesheet" type="text/css" href="../node_modules/foundation-contextmenu/dist/foundation.contextMenu.css" />
     <!-- Insert this line after script imports -->
     <script>if (window.module) module = window.module;</script>
+
     <link rel="stylesheet" type="text/css" href="index.css" />
+    <link rel="stylesheet" type="text/css" href="../node_modules/foundation-sites/dist/css/foundation.min.css" />
 </head>
 
 <body>
     <h1>Diagram</h1>
     <div class="grid-container full">
         <div class="grid-x grid-margin-x" id="container">
+            <div class="floating-menu" id="cellmenu">
+                <ul class="no-bullet vertical menu">
+                    <li>
+                        <button class="button small" type="button" id="add-input">Add Input</button>
+                    </li>
+                    <li>
+                        <button class="button small" type="button" id="add-output">Add Output</button>
+                    </li>
+                </ul>
+            </div>
             <div class="cell small-12" id="myholder"></div>
         </div>
     </div>
@@ -35,8 +51,19 @@
     <button class="button" type="button" id="import">Import</button>
     <button class="button" type="button" id="export">Export</button>
     <button class="button" type="button" id="auto-layout">Auto Layout</button>
+
+    <div class="reveal" id="exampleModal1" data-reveal>
+        <h1>Awesome. I Have It.</h1>
+        <p class="lead">Your couch. It is mine.</p>
+        <p>I'm a cool paragraph that lives inside of an even cooler modal. Wins!</p>
+        <button class="close-button" data-close aria-label="Close modal" type="button">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+
+
 </body>
-<script type="text/javascript" src="./menus/cellmenu.js"></script>
 <script type="text/javascript" src="./helpers/electron_helpers.js"></script>
 <script type="text/javascript" src="./helpers/jointjs_helpers.js"></script>
 <script type="text/javascript" src="./index.js"></script>

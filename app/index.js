@@ -20,6 +20,57 @@ var paper = new joint.dia.Paper({
     linkPinning: false,
 });
 
+
+paper.on('cell:contextmenu', function (cellView, evt, x, y) {
+    showCellmenu(cellView, x, y);
+})
+
+paper.on('blank:pointerclick', function (evt, x, y) {
+    hideCellmenu();
+})
+
+var cellWithMenu = undefined;
+function setCellWithMenu(cellView) {
+    var id = cellView.attributes()['model-id'];
+    cellWithMenu = graph.getCell(id);
+}
+
+function showCellmenu(cellView, x, y) {
+    setCellWithMenu(cellView);
+    $('#cellmenu').css({
+        top: y,
+        left: x
+    }).show();
+}
+
+function hideCellmenu() {
+    cellWithMenu = undefined;
+    $('#cellmenu').hide();
+}
+
+function resizeCellToPorts() {
+    var heightSlots = Math.max(cellWithMenu.attributes.inPorts.length, cellWithMenu.attributes.outPorts.length);
+    cellWithMenu.resize(100, heightSlots * 25);
+}
+
+function addInput() {
+    if (cellWithMenu) {
+        var randomName = Math.random().toString(36).substring(7);
+        cellWithMenu.addInPort(randomName);
+        resizeCellToPorts();
+        hideCellmenu();
+    }
+}
+
+function addOutput() {
+    if (cellWithMenu) {
+        var randomName = Math.random().toString(36).substring(7);
+        cellWithMenu.addOutPort(randomName);
+        resizeCellToPorts();
+        hideCellmenu();
+    }
+}
+
 function validateConnection(cellViewS, magnetS, cellViewT, magnetT, end, linkView) {
     // Prevent linking from output ports to input ports within one element.
     if (cellViewS === cellViewT) return false;
@@ -107,9 +158,10 @@ if (runningInElectron()) {
     document.querySelector("#import").setAttribute("disabled", true);
     document.querySelector("#export").setAttribute("disabled", true);
 }
-
+hideCellmenu();
 document.querySelector("#auto-layout").addEventListener("click", autoLayout);
+document.querySelector("#add-input").addEventListener("click", addInput);
+document.querySelector("#add-output").addEventListener("click", addOutput);
 resizePaper();
 window.onresize = resizePaper;
-addContextMenus();
 $(document).foundation();
