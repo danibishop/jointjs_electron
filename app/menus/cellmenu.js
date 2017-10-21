@@ -2,16 +2,15 @@ Foundation.ContextMenu.prototype.addConfig('cellmenu', {
     accessible: true,
     single: true,
     structure: [{
-        text: 'Move to',
-        help: 'Alt + M',
-        key: 'ALT_M',
+        text: 'Add input pin',
         click: function ($item) {
             var cell = graph.getCell($item.attr('model-id'));
-            console.log(cell);
+            cell.addInPort("R");
+            var heightSlots = Math.max(cell.attributes.inPorts.length, cell.attributes.outPorts.length);
+            cell.resize(100, heightSlots * 25);
         }
     }, {
-        icon: 'fa fa-paper-plane',
-        text: 'Send via mail',
+        text: 'Add output pin',
         click: function ($item) {
             alert('Sending a mail!');
         }
