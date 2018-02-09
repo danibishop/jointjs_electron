@@ -2,6 +2,9 @@
 
 This is just a minimal example of how to create a desktop application using Electron and JointJS.
 
+![](./doc/00_screencapture.JPG "Sample diagram of Electron and JointJS together")
+
+
 ## I want to run it
 
 1. Install NodeJS (with npm, of course)
